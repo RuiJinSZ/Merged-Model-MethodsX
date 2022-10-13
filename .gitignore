@@ -1,0 +1,11 @@
+# compile file
+Build_roms/
+oceanM
+
+# data file
+*.nc
+
+# run file
+Run
+slurm-*.out
+*.log

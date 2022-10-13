@@ -1,0 +1,456 @@
+!  Station Extraction Parameters.
+!
+!svn $Id: stations.in 889 2018-02-10 03:32:52Z arango $
+!========================================================= Hernan G. Arango ===
+!  Copyright (c) 2002-2018 The ROMS/TOMS Group                                !
+!    Licensed under a MIT/X style license                                     !
+!    See License_ROMS.txt                                                     !
+!==============================================================================
+!                                                                             !
+! Input parameters can be entered in ANY order, provided that the parameter   !
+! KEYWORD (usually, upper case) is typed correctly followed by "="  or "=="   !
+! symbols. Any comment lines are allowed and must begin with an exclamation   !
+! mark (!) in column one.  Comments may  appear to the right of a parameter   !
+! specification to improve documentation.  Comments will be ignored  during   !
+! reading.  Blank lines are also allowed and ignored. Continuation lines in   !
+! a parameter specification are allowed and must be preceded by a backslash   !
+! (\).  In some instances, more than one value is required for a parameter.   !
+! If fewer values are provided, the  last value  is assigned for the entire   !
+! parameter array.  The multiplication symbol (*),  without blank spaces in   !
+! between, is allowed for a parameter specification.  For example, in a two   !
+! grids nested application:                                                   !
+!                                                                             !
+!    AKT_BAK == 2*1.0d-6  2*5.0d-6              ! m2/s                        !
+!                                                                             !
+! indicates that the first two entries of array AKT_BAK,  in fortran column-  !
+! major order, will have the same value of "1.0d-6" for grid 1,  whereas the  !
+! next two entries will have the same value of "5.0d-6" for grid 2.           !
+!                                                                             !
+! In multiple levels of nesting and/or multiple connected domains  step-ups,  !
+! "Ngrids" entries are expected for some of these parameters.  In such case,  !
+! the order of the entries for a parameter is extremely important.  It  must  !
+! follow the same order (1:Ngrids) as in the state variable declaration. The  !
+! USER may follow the above guidelines for specifying his/her values.  These  !
+! parameters are marked by "==" plural symbol after the KEYWORD.              !
+!                                                                             !
+!==============================================================================
+!
+! Switch to control the writing of stations data within nested and/or multiple
+! connected grids, [1:Ngrids].
+
+   Lstations == T
+
+! Logical switches (TRUE/FALSE) to activate writing of fields in STATION
+! output file, [Sout(:,ng), ng=1, Ngrids].
+
+Sout(idUvel) == T       ! u                  3D U-velocity
+Sout(idVvel) == T       ! v                  3D V-velocity
+Sout(idu3dE) == F       ! u_eastward         3D U-eastward at RHO-points
+Sout(idv3dN) == F       ! v_northward        3D V-nortward at RHO-points
+Sout(idWvel) == T       ! w                  3D W-velocity
+Sout(idOvel) == T       ! omega              3D omega vertical velocity
+Sout(idUbar) == T       ! ubar               2D U-velocity
+Sout(idVbar) == T       ! vbar               2D V-velocity
+Sout(idu2dE) == F       ! ubar_eastward      2D U-eastward  at RHO-points
+Sout(idv2dN) == F       ! vbar_northward     2D V-northward at RHO-points
+Sout(idFsur) == T       ! zeta               free-surface
+Sout(idBath) == F       ! bath               time-dependent bathymetry
+
+Sout(idTvar) == 22*T    ! temp, salt, ...    all (NT) tracers
+
+Sout(idUsms) == T       ! sustr              surface U-stress
+Sout(idVsms) == T       ! svstr              surface V-stress
+Sout(idUbms) == T       ! bustr              bottom U-stress
+Sout(idVbms) == T       ! bvstr              bottom V-stress
+
+Sout(idUbrs) == F       ! bustrc             bottom U-current stress
+Sout(idVbrs) == F       ! bvstrc             bottom V-current stress
+Sout(idUbws) == F       ! bustrw             bottom U-wave stress
+Sout(idVbws) == F       ! bvstrw             bottom V-wave stress
+Sout(idUbcs) == F       ! bustrcwmax         bottom max wave-current U-stress
+Sout(idVbcs) == F       ! bvstrcwmax         bottom max wave-current V-stress
+
+Sout(idUbot) == F       ! Ubot               bed wave orbital U-velocity
+Sout(idVbot) == F       ! Vbot               bed wave orbital V-velocity
+Sout(idUbur) == F       ! Ur                 bottom U-velocity above bed
+Sout(idVbvr) == F       ! Vr                 bottom V-velocity above bed
+
+Sout(idW2xx) == F       ! Sxx_bar            2D radiation stress, Sxx component
+Sout(idW2xy) == F       ! Sxy_bar            2D radiation stress, Sxy component
+Sout(idW2yy) == F       ! Syy_bar            2D radiation stress, Syy component
+Sout(idU2rs) == F       ! Ubar_Rstress       2D radiation U-stress
+Sout(idV2rs) == F       ! Vbar_Rstress       2D radiation V-stress
+Sout(idU2Sd) == F       ! ubar_stokes        2D U-Stokes velocity
+Sout(idV2Sd) == F       ! vbar_stokes        2D V-Stokes velocity
+
+Sout(idW3xx) == F       ! Sxx                3D radiation stress, Sxx component
+Sout(idW3xy) == F       ! Sxy                3D radiation stress, Sxy component
+Sout(idW3yy) == F       ! Syy                3D radiation stress, Syy component
+Sout(idW3zx) == F       ! Szx                3D radiation stress, Szx component
+Sout(idW3zy) == F       ! Szy                3D radiation stress, Szy component
+Sout(idU3rs) == F       ! u_Rstress          3D U-radiation stress
+Sout(idV3rs) == F       ! v_Rstress          3D V-radiation stress
+Sout(idU3Sd) == F       ! u_stokes           3D U-Stokes velocity
+Sout(idV3Sd) == F       ! v_stokes           3D V-Stokes velocity
+
+Sout(idWamp) == F       ! Hwave              wave height
+Sout(idWlen) == F       ! Lwave              wave length
+Sout(idWdir) == F       ! Dwave              wave direction
+Sout(idWptp) == F       ! Pwave_top          wave surface period
+Sout(idWpbt) == F       ! Pwave_bot          wave bottom period
+Sout(idWorb) == F       ! Ub_swan            wave bottom orbital velocity
+Sout(idWdis) == F       ! Wave_dissip        wave dissipation
+
+Sout(idPair) == F       ! Pair               surface air pressure
+Sout(idUair) == T       ! Uair               surface U-wind component
+Sout(idVair) == T       ! Vair               surface V-wind component
+
+Sout(idTsur) == T T     ! shflux, ssflux     surface net heat and salt flux
+Sout(idLhea) == T       ! latent             latent heat flux
+Sout(idShea) == T       ! sensible           sensible heat flux
+Sout(idLrad) == T       ! lwrad              longwave radiation flux
+Sout(idSrad) == T       ! swrad              shortwave radiation flux
+Sout(idEmPf) == T       ! EminusP            E-P flux
+Sout(idevap) == T       ! evaporation        evaporation rate
+Sout(idrain) == T       ! rain               precipitation rate
+
+Sout(idDano) == T       ! rho                density anomaly
+Sout(idVvis) == F       ! AKv                vertical viscosity
+Sout(idTdif) == T       ! AKt                vertical T-diffusion
+Sout(idSdif) == F       ! AKs                vertical Salinity diffusion
+Sout(idHsbl) == T       ! Hsbl               depth of surface boundary layer
+Sout(idHbbl) == T       ! Hbbl               depth of bottom boundary layer
+Sout(idMtke) == F       ! tke                turbulent kinetic energy
+Sout(idMtls) == F       ! gls                turbulent length scale
+
+! Logical switches (TRUE/FALSE) to activate writing of exposed sediment
+! layer properties into STATIONS output file.  Currently, MBOTP properties
+! are expected for the bottom boundary layer and/or sediment models:
+!
+! idBott( 1=isd50)   grain_diameter          mean grain diameter
+! idBott( 2=idens)   grain_density           mean grain density
+! idBott( 3=iwsed)   settling_vel            mean settling velocity
+! idBott( 4=itauc)   erosion_stress          critical erosion stress
+! idBott( 5=irlen)   ripple_length           ripple length
+! idBott( 6=irhgt)   ripple_height           ripple height
+! idBott( 7=ibwav)   bed_wave_amp            wave excursion amplitude
+! idBott( 8=izdef)   Zo_def                  default bottom roughness
+! idBott( 9=izapp)   Zo_app                  apparent bottom roughness
+! idBott(10=izNik)   Zo_Nik                  Nikuradse bottom roughness
+! idBott(11=izbio)   Zo_bio                  biological bottom roughness
+! idBott(12=izbfm)   Zo_bedform              bed form bottom roughness
+! idBott(13=izbld)   Zo_bedload              bed load bottom roughness
+! idBott(14=izwbl)   Zo_wbl                  wave bottom roughness
+! idBott(15=iactv)   active_layer_thickness  active layer thickness
+! idBott(16=ishgt)   saltation               saltation height
+!
+!                                 1 1 1 1 1 1 1
+!               1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
+
+Sout(idBott) == F F F F F F F F F F F F F F F F
+
+! Number of stations to process in each nested grid.  These values are
+! essential because the station arrays are dynamically allocated using
+! these values, [1:Ngrids].
+
+    NSTATION ==  140 ! Added 12 new stations for A.Bever.
+!   NSTATION ==  128
+
+! Station locations for all grids in any desired order.  The horizontal
+! location for a particular station may be specified in terms of fractional
+! (I,J) grid pairs (FLAG=0) or (longitude,latitude) grid pairs (FLAG=1).
+! Here, FLAG is a special switch and may be used for multiple purposes.
+! The GRID column indicates nested grid number to process. This value must
+! be one in non-nested applications.  The COMMENT section is ignored during
+! reading and may be used to help documentation.
+
+POS =  GRID  FLAG      X-POS       Y-POS     COMMENT
+
+    1    1       -76.0383        38.2200 !water level         1        1   Bishops Head
+    1    1       -76.0683        38.5733 !                    2        2   Cambridge
+    1    1       -76.5283        39.2200 !                    3        3   Francis Scott Key Bridge
+    1    1       -76.4800        38.9833 !                    4        4   Annapolis
+    1    1       -76.3867        38.4317 !                    5        5   Cove Point
+    1    1       -76.4517        38.3167 !                    6        6   Solomons Island
+    1    1       -76.5333        38.1333 !                    7        7   Piney Point
+    1    1       -75.9883        37.1667 !                    8        8   Kiptopeke
+    1    1       -76.0150        37.5383 !                    9        9   Rappahannoc Light
+    1    1       -76.4650        37.9950 !                    10       10  Lewisetta
+    1    1       -76.3333        37.2500 !                    11       11  York River East Rear Range Light
+    1    1       -76.4783        37.2267 !                    12       12  Yorktown USCG Training Center
+    1    1       -76.3383        36.8883 !                    13       13  South Craney Island
+    1    1       -76.3300        36.9467 !                    14       14  Sewells Point
+    1    1       -76.1133        36.9667 !                    15       15  Chesapeake Bay Bridge Tunnel
+    1    1       -75.6967        36.9050 !                    16       16  Chesapeake Light
+    1    1       -76.0067        36.9300 !                    17       17  Cape Henry
+    1    1       -75.7300        36.1918 ! 91.d0  2.d0        18       18  Duck
+    1    1       -75.5989        37.6204 ! 89.d0 33.d0        19       19  Wach
+    1    1       -76.2500        39.2133 !                    20       20  Tolchester
+    1    1       -76.5783        39.2667 !                    21       21  Baltimore
+    1    1      -76.38000       38.47333 ! CBOS stations      22       1   MB
+    1    1      -76.11333       39.37500 !                    23       2   NB
+    1    1      -76.15927       38.63498 !                    24       3   CHOP
+    1    1      -76.52650       38.38867 !                    25       4   PAX
+    1    1      -76.08134       39.54511 !bay program T,S     26       1   CB1.1
+    1    1      -76.02467       39.44011 !                    27       2   CB2.1
+    1    1      -76.17467       39.34678 !                    28       3   CB2.2
+    1    1      -76.23801       39.24844 !                    29       4   CB3.1
+    1    1      -76.30634       39.16345 !                    30       5   CB3.2
+    1    1      -76.35968       38.99511 !                    31       6   CB3.3C
+    1    1      -76.34634       39.00178 !                    32       7   CB3.3E
+    1    1      -76.38802       39.00344 !                    33       8   CB3.3W
+    1    1      -76.39440       38.92706 !                    34       9   CB4.0C
+    1    1      -76.38690       38.92706 !                    35      10   CB4.0E
+    1    1      -76.43273       38.92733 !                    36      11   CB4.0W
+    1    1      -76.39967       38.82511 !                    37      12   CB4.1C
+    1    1      -76.37106       38.81650 !                    38      13   CB4.1E
+    1    1      -76.46273       38.81345 !                    39      14   CB4.1W
+    1    1      -76.41773       38.64484 !                    40      15   CB4.2C
+    1    1      -76.39995       38.64484 !                    41      16   CB4.2E
+    1    1      -76.50134       38.64345 !                    42      17   CB4.2W
+    1    1      -76.43467       38.55651 !                    43      18   CB4.3C
+    1    1      -76.38967       38.55651 !                    44      19   CB4.3E
+    1    1      -76.49301       38.55651 !                    45      20   CB4.3W
+    1    1      -76.34300       38.41318 !                    46      21   CB4.4
+    1    1      -76.29300       38.31846 !                    47      22   CB5.1
+    1    1      -76.37550       38.32512 !                    48      23   CB5.1W
+    1    1      -76.22800       38.13679 !                    49      24   CB5.2
+    1    1      -76.16800       37.91179 !                    50      25   CB5.3
+    1    1      -76.17466       37.80013 !                    51      26   CB5.4
+    1    1      -76.29467       37.81347 !                    52      27   CB5.4W
+    1    1      -76.18967       37.69180 !                    53      28   CB5.5
+    1    1      -76.16216       37.58847 !                    54      29   CB6.1
+    1    1      -76.15633       37.48680 !                    55      30   CB6.2
+    1    1      -76.15966       37.41153 !                    56      31   CB6.3
+    1    1      -76.20799       37.23653 !                    57      32   CB6.4
+    1    1      -75.98966       37.68346 !                    58      33   CB7.1
+    1    1      -75.97466       37.77513 !                    59      34   CB7.1N
+    1    1      -76.05799       37.58124 !                    60      35   CB7.1S
+    1    1      -76.07966       37.41153 !                    61      36   CB7.2
+    1    1      -76.02466       37.41153 !                    62      37   CB7.2E
+    1    1      -76.12521       37.11681 !                    63      38   CB7.3
+    1    1      -76.05383       37.22875 !                    64      39   CB7.3E
+    1    1      -76.02048       36.99570 !                    65      40   CB7.4
+    1    1      -75.99937       37.06237 !                    66      41   CB7.4N
+    1    1      -76.16772       36.99542 !                    67      42   CB8.1
+    1    1      -76.03494       36.94737 !                    68      43   CB8.1E
+    1    1      -76.24967       38.88345 !                    69      44   EE1.1
+    1    1      -76.27467       38.65012 !                    70      45   EE2.1
+    1    1      -76.30801       38.53345 !                    71      46   EE2.2
+    1    1      -76.01633       38.28345 !                    72      47   EE3.0
+    1    1      -75.97465       38.20012 !                    73      48   EE3.1
+    1    1      -75.92467       37.98010 !                    74      49   EE3.2
+    1    1      -75.76632       37.94179 !                    75      50   EE3.3
+    1    1      -75.79132       37.90846 !                    76      51   EE3.4
+    1    1      -75.84438       37.79652 !                    77      52   EE3.5
+    1    1      -75.95800       39.57511 !                    78      53   ET1.1
+    1    1      -75.89967       39.50845 !                    79      54   ET2.3
+    1    1      -76.21634       38.99178 !                    80      55   ET4.2
+    1    1      -76.05800       38.58012 !                    81      56   ET5.2
+    1    1      -75.88299       38.33345 !                    82      57   ET6.2
+    1    1      -76.60162       38.42513 !                    83      58   LE1.1
+    1    1      -76.51106       38.37873 !                    84      59   LE1.2
+    1    1      -76.48801       38.34068 !                    85      60   LE1.3
+    1    1      -76.42134       38.31207 !                    86      61   LE1.4
+    1    1      -76.58302       38.16679 !                    87      62   LE2.2
+    1    1      -76.34772       38.02152 !                    88      63   LE2.3
+    1    1      -76.61592       37.75925 !                    89      64   LE3.1
+    1    1      -76.55047       37.66914 !                    90      65   LE3.2
+    1    1      -76.47442       37.68842 !                    91      66   LE3.3
+    1    1      -76.44486       37.63189 !                    92      67   LE3.4
+    1    1      -76.28467       37.59680 !                    93      68   LE3.6
+    1    1      -76.28300       37.60680 !                    94      69   LE3.6N
+    1    1      -76.29300       37.57263 !                    95      70   LE3.6S
+    1    1      -76.30661       37.53069 !                    96      71   LE3.7
+    1    1      -76.69125       37.41883 !                    97      72   LE4.1
+    1    1      -76.57811       37.29044 !                    98      73   LE4.2
+    1    1      -76.43094       37.23392 !                    99      74   LE4.3
+    1    1      -76.64833       37.20297 !                   100      75   LE5.1
+    1    1      -76.59306       37.05600 !                   101      76   LE5.2
+    1    1      -76.47544       36.99044 !                   102      77   LE5.3
+    1    1      -76.39275       36.95486 !                   103      78   LE5.4
+    1    1      -76.30300       36.99681 !                   104      79   LE5.5
+    1    1      -76.29050       36.98180 !                   105      80   LE5.5A
+    1    1      -76.28966       36.97458 !                   106      81   LE5.5B
+    1    1      -76.31328       36.99903 !                   107      82   LE5.5-W
+    1    1      -76.33836       36.90456 !                   108      83   LE5.6
+    1    1      -76.66413       38.49068 !                   109      84   RET1.1
+    1    1      -76.99053       38.36263 !                   110      85   RET2.4
+    1    1      -76.82220       37.91730 !                   111      86   RET3.1
+    1    1      -76.71195       37.81158 !                   112      87   RET3.2
+    1    1      -76.79715       37.57125 !                   113      88   RET4.2
+    1    1      -76.78889       37.50869 !                   114      89   RET4.3
+    1    1      -76.78219       37.20294 !                   115      90   RET5.2
+    1    1      -76.68024       38.58179 !                   116      91   TF1.7
+    1    1      -77.04859       38.70650 !                   117      92   TF2.1
+    1    1      -76.90928       38.01847 !                   118      93   TF3.3
+    1    1      -76.92329       37.22182 !                   119      94   TF5.6A
+    1    1      -76.34634       37.31181 !                   120      95   WE4.1
+    1    1      -76.38634       37.24181 !                   121      96   WE4.2
+    1    1      -76.39050       37.25181 !                   122      97   WE4.2N
+    1    1      -76.38634       37.23681 !                   123      98   WE4.2S
+    1    1      -76.37300       37.17681 !                   124      99   WE4.3
+    1    1      -76.29300       37.11015 !                   125      100  WE4.4
+    1    1      -76.34162       39.38344 !                   126      101  WT2.1
+    1    1      -76.52469       39.20844 !                   127      102  WT5.1
+    1    1      -76.47469       39.07511 !                   128      103  WT6.1
+    1    1      -76.073378      39.54025  !                  129      1    CBIBS_SUS
+    1    1      -76.39108       39.151892 !                  130      2    CBIBS_PAT
+    1    1      -76.446768      38.963602 !                  131      3    CBIBS_ANA
+    1    1      -77.035672      38.78765  !                  132      4    CBIBS_UPT
+    1    1      -76.414605      38.556375 !                  133      5    CBIBS_GOR
+    1    1      -76.335572      38.033345 !                  134      6    CBIBS_POT
+    1    1      -76.26037       37.568152 !                  135      7    CBIBS_STR
+    1    1      -76.777298      37.204095 !                  136      8    CBIBS_JAM
+    1    1      -76.297501      36.870227 !                  137      9    CBIBS_NOR_Moved_In_Grid
+    1    1      -76.045418      36.97414  !                  138      10   CBIBS_FSL
+    1    1      -77.114333      37.305068 !                  139      11   CBIBS_VCU
+    1    1      -76.39524       38.56424  !                  140      12   CBIBS_GOR2_WaterDepthMatch
+
+!
+!  GLOSSARY:
+!  =========
+!
+!  This input file provides the positions of stations data to be extracted
+!  and written into STATIONS output file.  This file is use to monitor model
+!  fields at frequent time intervals.  It is also used to sample the model at
+!  observation locations in order to build the penalty function used in
+!  variational data assimilation.
+!
+!------------------------------------------------------------------------------
+! Control Switch.
+!------------------------------------------------------------------------------
+!
+! Lstations      Switch to control the writing of station data within nested
+!                  and/or multiple connected grids. Ngrid values are expected.
+!                  By default this switch is set to TRUE in "mod_scalars" for
+!                  all grids when the CPP option STATIONS is activated.  The
+!                  USER can control which grid to process by turning on/off
+!                  this switch.
+!
+!------------------------------------------------------------------------------
+! Logical switches (TRUE/FALSE) to activate writing of fields in STATIONS
+! output file.  Except for tracer type variables, Ngrids values are expected
+! for all switches.
+!------------------------------------------------------------------------------
+!
+!  Sout(idUvel)  Write out 3D U-velocity component.
+!  Sout(idVvel)  Write out 3D V-velocity component.
+!  Sout(idu3dE)  Write out 3D Eastward  velocity component at RHO-points.
+!  Sout(idv3dN)  Write out 3D Northward velocity component at RHO-points.
+!  Sout(idWvel)  Write out 3D W-velocity component.
+!  Sout(idOvel)  Write out 3D omega vertical velocity.
+!  Sout(idUbar)  Write out 2D U-velocity component.
+!  Sout(idVbar)  Write out 2D V-velocity component.
+!  Sout(idu2dE)  Write out 2D Eastward  velocity component at RHO-points.
+!  Sout(idv2dN)  Write out 2D Northward velocity component at RHO-points.
+!  Sout(idFsur)  Write out free-surface.
+!  Sout(idBath)  Write out time-dependent bathymetry.
+!
+!  Sout(idTvar)  Write out tracer type variables,  (NT,Ngrids) values are
+!                  Expected.
+!
+!  Sout(idUsms)  Write out surface U-momentum stress.
+!  Sout(idVsms)  Write out surface V-momentum stress.
+!  Sout(idUbms)  Write out bottom  U-momentum stress.
+!  Sout(idVbms)  Write out bottom  V-momentum stress.
+!
+!  Sout(idUbrs)  Write out current-induced, U-momentum stress.
+!  Sout(idVbrs)  Write out current-induced, V-momentum stress.
+!  Sout(idUbws)  Write out wind-induced, bottom U-wave stress.
+!  Sout(idVbws)  Write out wind-induced, bottom V-wave stress.
+!  Sout(idUbcs)  Write out bottom maximum wave and current U-stress.
+!  Sout(idVbcs)  Write out bottom maximum wave and current V-stress.
+!
+!  Sout(idUbot)  Write out wind-induced, bed wave orbital U-velocity.
+!  Sout(idVbot)  Write out wind-induced, bed wave orbital V-velocity.
+!  Sout(idUbur)  Write out bottom U-velocity above bed.
+!  Sout(idVbvr)  Write out bottom V-velocity above bed.
+!
+!  Sout(idW2xx)  Write out 2D radiation stress, Sxx component.
+!  Sout(idW2xy)  Write out 2D radiation stress, Sxy component.
+!  Sout(idW2yy)  Write out 2D radiation stress, Syy component.
+!  Sout(idU2rs)  Write out 2D U-radiation stress.
+!  Sout(idV2rs)  Write out 2D V-radiation stress.
+!  Sout(idU2Sd)  Write out 2D U-Stokes velocity.
+!  Sout(idV2Sd)  Write out 2D V-Stokes velocity.
+!
+!  Sout(idW3xx)  Write out 3D radiation stress, Sxx component.
+!  Sout(idW3xy)  Write out 3D radiation stress, Sxy component.
+!  Sout(idW3yy)  Write out 3D radiation stress, Syy component.
+!  Sout(idW3zx)  Write out 3D radiation stress, Szx component.
+!  Sout(idW3zy)  Write out 3D radiation stress, Szy component.
+!  Sout(idU3rs)  Write out 3D U-radiation stress.
+!  Sout(idV3rs)  Write out 3D V-radiation stress.
+!  Sout(idU3Sd)  Write out 3D U-Stokes velocity.
+!  Sout(idV3Sd)  Write out 3D V-Stokes velocity.
+!
+!  Sout(idWamp)  Write out wave height.
+!  Sout(idWlen)  Write out wave length.
+!  Sout(idWdir)  Write out wave direction.
+!  Sout(idWptp)  Write out wave surface period.
+!  Sout(idWpbt)  Write out wave bottom period.
+!  Sout(idWorb)  Write out wave bottom orbital velocity.
+!  Sout(idWdis)  Write out wave dissipation.
+!
+!  Sout(idPair)  Write out surface air pressure.
+!  Sout(idUair)  Write out surface U-wind component.
+!  Sout(idVair)  Write out surface V-wind component.
+!
+!  Sout(idTsur)  Write out surface net heat and salt flux.
+!  Sout(idLhea)  Write out latent heat flux.
+!  Sout(idShea)  Write out sensible heat flux.
+!  Sout(idLrad)  Write out long-wave radiation flux.
+!  Sout(idSrad)  Write out short-wave radiation flux.
+!  Sout(idEmPf)  Write out E-P flux.
+!  Sout(idevap)  Write out evaporation rate.
+!  Sout(idrain)  Write out precipitation rate.
+!
+!  Sout(idDano)  Write out density anomaly.
+!  Sout(idVvis)  Write out vertical viscosity coefficient.
+!  Sout(idTdif)  Write out vertical diffusion coefficient of temperature.
+!  Sout(idSdif)  Write out vertical diffusion coefficient of salinity.
+!  Sout(idHsbl)  Write out depth of oceanic surface boundary layer.
+!  Sout(idHbbl)  Write out depth of oceanic bottom boundary layer.
+!  Sout(idMtke)  Write out turbulent kinetic energy.
+!  Sout(idMtls)  Write out turbulent kinetic energy times length scale.
+!
+!  Sout(idBott)  Write out exposed sediment layer properties, 1:MBOTP.
+!
+!------------------------------------------------------------------------------
+! Station positions KEYWORDS.
+!------------------------------------------------------------------------------
+!
+!  NSTATION      Number of stations to process in each nested grid. Ngrids
+!                  values are expected.  These values are essential because
+!                  the station arrays are dynamically allocated using these
+!                  values.
+!
+!  POS           Station locations for all grids in any desired order.  The
+!                  horizontal location for a particular station can be
+!                  specified in terms of fractional (I,J) grid pairs (FLAG=0)
+!                  or (longitude,latitude) grid pairs (FLAG=1). Here, FLAG is
+!                  a special switch and may be used for multiple purposes.
+!                  The GRID column indicates nested grid number to process.
+!                  This value must be one in non-nested applications.  The
+!                  COMMENT section is ignored during reading and may be used
+!                  to help documentation.  This locations are used to
+!                  interpolate model data before writting to output STATIONS
+!                  file.  The stations locations are read using the following
+!                  statement:
+!
+!                  is(1:Ngrids)=0
+!                  DO WHILE (.true.)
+!                    read (unit,*,ERR=10) igrid, flag, Xpos, Ypos
+!                    ng=MAX(1,ABS(ng))
+!                    is(ng)=ic(ng)+1
+!                    SCALARS(ng)%Sflag(is(ng))=flag
+!                    SCALARS(ng)%SposX(is(ng))=Xpos
+!                    SCALARS(ng)%SposY(is(ng))=Ypos
+!                  END DO
+!
+!                Since there is no decoding during the reading of the stations
+!                locations, the POS keyword must be the last one to process.
+!                That is, it should be at the end of the input specification.
+!
+!
